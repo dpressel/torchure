@@ -11,7 +11,8 @@ Load and use word embeddings.  Currently just reads word2vec binaries.  There ar
 th> require 'emb';
                                                                       [0.0000s]	
 th> wv = Word2VecModel('/data/xdata/oct-s140clean-uber.cbow-bin')
-                                                                      [14.4513s]th> wv.vsz, wv.dsz  
+                                                                      [14.4513s]
+th> wv.vsz, wv.dsz  
 949887	150		
                                                                       [0.0001s]	
 th> hellov = wv:word2vec('hello')
@@ -32,12 +33,9 @@ th> wv:word2vec('kjlasgjklwljk', false)
 
 ```
 
-The approach above might be useful if you are not planning on fine-tuning your embeddings and want to just preprocess your data.  For instance, in the case of classification, you can simply form a tensor (or batch of tensors):
+The approach above might be useful if you are not planning on fine-tuning your embeddings and want to just preprocess your data.  For instance, in the case of classification, you can simply form a tensor (or batch of tensors).  This example loads a temporal vector from a TSV, where the first tab is the label, followed by a sentence.  It returns a table with-sub tables for x (the feature vector) and y (the label).  Each feature vector has a row for each word, and a column for each embedding dimension.
 
 ```
--- Load temporal data from TSV, label followed by a tab followed by a sentence
--- Return a table with sub-tables for x and y. 
--- xt has shape a word vector for each word as a row
 function loadTemporal(file, w2v, filtsz, mxlen)
     local ts = {}
     local yt = {}
@@ -47,10 +45,8 @@ function loadTemporal(file, w2v, filtsz, mxlen)
     local dsz = w2v.dsz
     local fsz = filtsz or 0
     local mxw = mxlen or 128
-    -- for zeropadding the ends of the signal (AKA wide conv)
     local halffiltsz = math.floor(fsz / 2)
 
-    -- Read in training data
     local tsfile = io.open(file, 'r')
     local linenum = 1
 
@@ -134,3 +130,4 @@ luarocks make emb-scm-1.rockspec
 ```
 luarocks install https://raw.githubusercontent.com/dpressel/emb/master/emb-scm-1.rockspec
 ```
+

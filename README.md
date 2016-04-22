@@ -83,7 +83,7 @@ function loadTemporal(file, w2v, filtsz, mxlen)
 end
 ```
 
-If you want to just use a model directly as pretraining for a nn.LookupTable, you can use the Word2VecLookupTable instead.  The usage is the same (almost), except this can be used both as a way to find the word vectors for indices, and it can be put directly into a neural network:
+If you want to just use a model directly as pretraining for a nn.LookupTable, you can use the Word2VecLookupTable instead.  The usage is the same (almost), except this can be used both as a way to find the word vectors for indices, and it can be put directly into a neural network.
 
 ```
 th> wv = Word2VecLookupTable('/data/xdata/oct-s140clean-uber.cbow-bin')
@@ -96,8 +96,9 @@ th> hellov = wv:lookup('hello')
 th> wv:lookup('kjlasgjklwljk')
                                                                       [0.0000s]	
 ```
+Now we can use the table directly as a LookupTable, for example, in a convolution network  
 
--- Create a conv net with MoT pooling for multi-class decision
+```
 function createNN(w2v, cmotsz, filtsz, nc, gpu)
     local seq = nn.Sequential()
     seq:add(w2v)

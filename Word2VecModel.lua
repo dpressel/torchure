@@ -28,7 +28,7 @@ function Word2VecModel:__init(filename)
     file:close()
 end
 
-function Word2VecModel:word2vec(word, nullifabsent)
+function Word2VecModel:lookup(word, nullifabsent)
     local key = self.vocab[word]
     if key ~= nil then 
         return self.w2v[key]

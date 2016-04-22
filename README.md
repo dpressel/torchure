@@ -15,7 +15,7 @@ th> wv = Word2VecModel('/data/xdata/oct-s140clean-uber.cbow-bin')
 th> wv.vsz, wv.dsz  
 949887	150		
                                                                       [0.0001s]	
-th> hellov = wv:word2vec('hello')
+th> hellov = wv:lookup('hello')
 
 ```
 
@@ -23,9 +23,9 @@ If a word isnt present, by default, it gives back a zero-vector.  If you pass tr
 
 ```
       
-th> wv:word2vec('kjlasgjklwljk', true)
+th> wv:lookup('kjlasgjklwljk', true)
                                                                       [0.0000s]	
-th> wv:word2vec('kjlasgjklwljk', false)
+th> wv:lookup('kjlasgjklwljk', false)
  0
  0
  0
@@ -68,7 +68,7 @@ function loadTemporal(file, w2v, filtsz, mxlen)
  	local x = torch.zeros(siglen, dsz)
 	for i=1,mx do
 	    local w = toks[i]
-	    local z = w2v:word2vec(w)
+	    local z = w2v:lookup(w)
 	    x[{i + halffiltsz}] = z
 	end
 	table.insert(yt, y)

@@ -20,6 +20,8 @@ th> hellov = wv:word2vec('hello')
 ```
 
 If a word isnt present, by default, it gives back a zero-vector.  If you pass true to the second parameter, it will return nil instead
+
+```
       
 th> wv:word2vec('kjlasgjklwljk', true)
                                                                       [0.0000s]	

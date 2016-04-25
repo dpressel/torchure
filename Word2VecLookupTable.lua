@@ -10,8 +10,8 @@ function Word2VecLookupTable:__init(filename)
     local vxd = readupto(file, '\n'):split(' ')
     self.vsz = tonumber(vxd[1])
     self.dsz = tonumber(vxd[2])
-    self.weight = torch.FloatTensor(self.vsz, self.dsz)
-    self.gradWeight = torch.FloatTensor(self.vsz, self.dsz):zero()
+    self.weight = torch.FloatTensor(self.vsz+1, self.dsz)
+    self.gradWeight = torch.FloatTensor(self.vsz+1, self.dsz):zero()
     
     -- loop |V| times read in vocab to table
     rv = {}
@@ -30,7 +30,9 @@ function Word2VecLookupTable:__init(filename)
        -- normalize the vector!
        self.weight[{{i},{}}] = vec:div(vec:norm())
     end
-
+    
+    self.vsz = self.vsz + 1
+    self.vocab["<PADDING>"] = self.vsz
     file:close()
 
 end

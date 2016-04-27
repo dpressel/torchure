@@ -12,7 +12,7 @@ function Word2VecLookupTable:__init(filename, whitelist, unifweight)
     self.vsz = 0
     local vsz = tonumber(vxd[1])
     if whitelist then
-       for k,v in pairs(whitelist) do
+       for name,_ in pairs(whitelist) do
 	  self.vsz = self.vsz + 1
        end
     else
@@ -41,10 +41,17 @@ function Word2VecLookupTable:__init(filename, whitelist, unifweight)
 	  -- normalize the vector!
 	  self.weight[{{k},{}}] = vec:div(vec:norm())
 	  k = k + 1
-
+	  whitelist[word] = nil
        end
     end
 
+    -- for any remaining words in the whitelist
+    if whitelist then
+       for name,_ in pairs(whitelist) do
+	   self.vocab[name] = k
+	   k = k + 1
+       end
+    end
     self.vsz = self.vsz + 1
     self.vocab["<PADDING>"] = self.vsz
     file:close()

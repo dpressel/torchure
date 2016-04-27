@@ -2,8 +2,9 @@ local nn = require 'nn'
 local Word2VecLookupTable, parent = torch.class('Word2VecLookupTable', 'nn.LookupTable')
 
 
-function Word2VecLookupTable:__init(filename, whitelist)
+function Word2VecLookupTable:__init(filename, whitelist, unifweight)
     parent.__init(self, 0, 0)
+    local uw = unifweight or 0.0
     file = torch.DiskFile(filename, 'r')
     file:binary()
     -- |V| x d
@@ -19,7 +20,7 @@ function Word2VecLookupTable:__init(filename, whitelist)
     end
 
     self.dsz = tonumber(vxd[2])
-    self.weight = torch.FloatTensor(self.vsz+1, self.dsz):zero()
+    self.weight = torch.FloatTensor(self.vsz+1, self.dsz):uniform(-uw, uw)
     self.gradWeight = torch.FloatTensor(self.vsz+1, self.dsz):zero()
     
     -- loop |V| times read in vocab to table

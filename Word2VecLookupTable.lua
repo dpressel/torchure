@@ -2,7 +2,7 @@ local nn = require 'nn'
 local Word2VecLookupTable, parent = torch.class('Word2VecLookupTable', 'nn.LookupTable')
 
 
-function Word2VecLookupTable:__init(filename, whitelist, unifweight)
+function Word2VecLookupTable:__init(filename, knownvocab, unifweight, normalize)
     parent.__init(self, 0, 0)
     local uw = unifweight or 0.0
     file = torch.DiskFile(filename, 'r')
@@ -11,8 +11,8 @@ function Word2VecLookupTable:__init(filename, whitelist, unifweight)
     local vxd = readupto(file, '\n'):split(' ')
     self.vsz = 0
     local vsz = tonumber(vxd[1])
-    if whitelist then
-       for name,_ in pairs(whitelist) do
+    if knownvocab then
+       for name,_ in pairs(knownvocab) do
 	  self.vsz = self.vsz + 1
        end
     else
@@ -36,18 +36,18 @@ function Word2VecLookupTable:__init(filename, whitelist, unifweight)
        -- read its vec
        vec = torch.FloatTensor(file:readFloat(self.dsz))
 
-       if whitelist == nil or whitelist[word] then
+       if knownvocab == nil or knownvocab[word] then
 	  self.vocab[word] = k
 	  -- normalize the vector!
-	  self.weight[{{k},{}}] = vec:div(vec:norm())
+	  self.weight[{{k},{}}] = normalize and vec:div(vec:norm()) or vec
 	  k = k + 1
-	  whitelist[word] = nil
+	  knownvocab[word] = nil
        end
     end
 
-    -- for any remaining words in the whitelist
-    if whitelist then
-       for name,_ in pairs(whitelist) do
+    -- for any remaining words in the knownvocab
+    if knownvocab then
+       for name,_ in pairs(knownvocab) do
 	   self.vocab[name] = k
 	   k = k + 1
        end

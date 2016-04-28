@@ -1,6 +1,6 @@
 local Word2VecModel = torch.class('Word2VecModel')
 
-function Word2VecModel:__init(filename)
+function Word2VecModel:__init(filename, normalize)
     file = torch.DiskFile(filename, 'r')
     file:binary()
     -- |V| x d
@@ -22,7 +22,7 @@ function Word2VecModel:__init(filename)
        vec = torch.FloatTensor(file:readFloat(self.dsz))
        self.vocab[word] = i
 
-       self.w2v[{i}] = vec:div(vec:norm())
+       self.w2v[{i}] = normalize and vec:div(vec:norm()) or vec
     end
 
     file:close()

@@ -45,7 +45,7 @@ function Word2VecLookupTable:__init(filename, knownvocab, unifweight, normalize)
 	  -- normalize the vector!
 	  self.weight[{{k},{}}] = normalize and vec:div(vec:norm()) or vec
 	  k = k + 1
-	  knownvocab[word] = nil
+	  if knownvocab ~= nil then knownvocab[word] = nil end
        end
     end
 

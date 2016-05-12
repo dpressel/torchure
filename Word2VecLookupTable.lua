@@ -27,7 +27,11 @@ function Word2VecLookupTable:__init(filename, knownvocab, unifweight, normalize)
     rv = {}
     self.vocab = {}
     
-    local k = 1
+    -- Make sure padding is zero
+    self.weight[1]:zero()
+    self.vocab["<PADDING>"] = 1
+
+    local k = 2
     for i=1,vsz do
 
        -- read in word       
@@ -53,7 +57,6 @@ function Word2VecLookupTable:__init(filename, knownvocab, unifweight, normalize)
        end
     end
     self.vsz = self.vsz + 1
-    self.vocab["<PADDING>"] = self.vsz
     file:close()
 
 end

@@ -4,7 +4,7 @@ source = {
   url = "git://github.com/dpressel/torchure.git",
 }
 description = {
-  summary = "Simple tools for using existing Word2Vec data",
+  summary = "Simple torch utils",
   detailed = [[
     Various torch utilities including support to load and save word2vec models
   ]],
@@ -22,5 +22,8 @@ build = {
     ["torchure.utils"] = "utils.lua",
     ["torchure.Word2VecModel"] = "Word2VecModel.lua",
     ["torchure.Word2VecLookupTable"] = "Word2VecLookupTable.lua",
+    ["torchure.DataStore"] = "DataStore.lua",
+    ["torchure.FileBackedStore"] = "FileBackedStore.lua",
+    ["torchure.TableBackedStore"] = "TableBackedStore.lua",
   }
 }

@@ -65,3 +65,12 @@ function lookupSent(rlut, lu)
    end
    return table.concat(words, " ")
 end
+
+function numLines(file)
+   local tsfile = io.open(file, 'r')
+   local count = 0 
+   for line in tsfile:lines() do
+      count = count + 1
+   end
+   return count
+end

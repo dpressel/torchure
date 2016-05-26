@@ -1,6 +1,6 @@
 require 'torch'
 require 'nn'
 
-require 'emb.Word2VecLookupTable'
-require 'emb.Word2VecModel'
-require 'emb.embutils'
+require 'torchure.Word2VecLookupTable'
+require 'torchure.Word2VecModel'
+require 'torchure.utils'

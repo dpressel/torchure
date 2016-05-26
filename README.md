@@ -1,5 +1,5 @@
-# emb
-Tiny module to load and use existing Word2Vec embeddings in Torch
+# torchure
+Tiny module of accrued Torch utilities.  This includes a Word2Vec model loader to use existing embeddings in Torch and a derived implementation of nn.LookupTable that loads its model from a binary.
 
 About
 -----
@@ -131,6 +131,6 @@ luarocks make emb-scm-1.rockspec
 
 - execute:
 ```
-luarocks install https://raw.githubusercontent.com/dpressel/emb/master/emb-scm-1.rockspec
+luarocks install https://raw.githubusercontent.com/dpressel/torchure/master/torchure-scm-1.rockspec
 ```
 

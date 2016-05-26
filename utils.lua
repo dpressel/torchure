@@ -55,13 +55,16 @@ function loadModel(file, gpu)
    return gpu and model:cuda() or model
 end
 
-function lookupSent(rlut, lu)
+function lookupSent(rlut, lu, rev)
    local words = {}
    for i=1,lu:size(1) do
       local word = rlut[lu[i]]
       if word ~= '<PADDING>' then
 	 table.insert(words, word)
       end
+   end
+   if rev then
+      words = revtab(words)
    end
    return table.concat(words, " ")
 end

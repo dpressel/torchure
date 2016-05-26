@@ -8,7 +8,7 @@ Load and use word embeddings.  Currently just reads word2vec binaries.  There ar
 
 ```
 
-th> require 'emb';
+th> require 'torchure';
                                                                       [0.0000s]	
 th> wv = Word2VecModel('/data/xdata/oct-s140clean-uber.cbow-bin')
                                                                       [14.4513s]

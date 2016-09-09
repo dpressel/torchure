@@ -43,6 +43,40 @@ function revtab(tab)
     return newTable
 end
 
+-- Get a subtable from indices given
+-- if from is not given, 1 is used
+-- if to is not given, end is used
+-- negative indexing allowed for to
+function subtab(orig, from, to)
+   local start = from or 1
+   local T = #orig
+   local upto = to or 0
+   upto = upto > 1 and upto < T and upto or (T+upto)
+
+   local tab = {}
+   for i=start,upto do
+      table.insert(tab, orig[i])
+   end
+   return tab
+end
+
+-- Make the Tensor into a table in the first dimension
+-- if form is not given, 1 is used
+-- if to is not given, end is used
+-- negative indexing allowed for to
+function tab1st(orig, from, to)
+
+   local start = from or 1
+   local T = orig:size()[1]
+   local upto = to or 0
+   upto = upto > 1 and upto < T and upto or (T+upto)
+
+   local tab = {}
+   for i=start,upto do
+      table.insert(tab, orig[i])
+   end
+   return tab
+end
 -- WIP
 function saveModel(model, file, gpu)
    if gpu then model:float() end
@@ -59,7 +93,7 @@ function lookupSent(rlut, lu, rev)
    local words = {}
    for i=1,lu:size(1) do
       local word = rlut[lu[i]]
-      if word ~= '<PADDING>' then
+      if word ~= '<PADDING>' and word ~= '<EOS>' then
 	 table.insert(words, word)
       end
    end

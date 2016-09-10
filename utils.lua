@@ -60,6 +60,20 @@ function subtab(orig, from, to)
    return tab
 end
 
+function firstin(tab, x)
+   for i,v in pairs(tab) do
+      if v == x then
+	 return i
+      end
+   end
+   return 0
+end
+
+function dim1(obj)
+   local sz = type(obj) == 'table' and #obj or obj:size()[1]
+   return sz
+end
+
 -- Make the Tensor into a table in the first dimension
 -- if form is not given, 1 is used
 -- if to is not given, end is used
@@ -89,11 +103,15 @@ function loadModel(file, gpu)
    return gpu and model:cuda() or model
 end
 
-function lookupSent(rlut, lu, rev)
+local I2S_DEF_STOP_WORDS = {'<PADDING>', '<GO>', '<EOS>'}
+function indices2sent(index2word, indices, rev, stopwords)
    local words = {}
-   for i=1,lu:size(1) do
-      local word = rlut[lu[i]]
-      if word ~= '<PADDING>' and word ~= '<EOS>' then
+   local filt = stopwords or I2S_DEF_STOP_WORDS
+   local sz = dim1(indices)
+   for i=1,sz do
+      local word = index2word[indices[i]]
+      -- If not found in stopwords
+      if firstin(filt, word) == 0 then
 	 table.insert(words, word)
       end
    end

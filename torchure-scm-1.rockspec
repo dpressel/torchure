@@ -22,6 +22,7 @@ build = {
     ["torchure.utils"] = "utils.lua",
     ["torchure.Word2VecModel"] = "Word2VecModel.lua",
     ["torchure.Word2VecLookupTable"] = "Word2VecLookupTable.lua",
+    ["torchure.VocabLookupTable"] = "VocabLookupTable.lua",
     ["torchure.DataStore"] = "DataStore.lua",
     ["torchure.FileBackedStore"] = "FileBackedStore.lua",
     ["torchure.TableBackedStore"] = "TableBackedStore.lua",

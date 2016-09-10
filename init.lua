@@ -7,4 +7,4 @@ require 'torchure.utils'
 require 'torchure.DataStore'
 require 'torchure.TableBackedStore'
 require 'torchure.FileBackedStore'
-
+require 'torchure.VocabLookupTable'

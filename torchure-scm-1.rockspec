@@ -26,5 +26,6 @@ build = {
     ["torchure.DataStore"] = "DataStore.lua",
     ["torchure.FileBackedStore"] = "FileBackedStore.lua",
     ["torchure.TableBackedStore"] = "TableBackedStore.lua",
+    ["torchure.NLLSequenceCriterion"] = "NLLSequenceCriterion.lua",
   }
 }

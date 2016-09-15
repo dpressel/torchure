@@ -60,6 +60,16 @@ function subtab(orig, from, to)
    return tab
 end
 
+-- Prepend to table
+function pretab(tab, item)
+   local copy = {}
+   table.insert(copy, item)
+   for _,v in pairs(tab) do
+      table.insert(copy, v)
+   end
+   return copy
+end
+
 function firstin(tab, x)
    for i,v in pairs(tab) do
       if v == x then
@@ -72,6 +82,10 @@ end
 function dim1(obj)
    local sz = type(obj) == 'table' and #obj or obj:size()[1]
    return sz
+end
+
+function typ0s(t1)
+   return torch.zeros(t1:size()):type(t1:type())
 end
 
 -- Make the Tensor into a table in the first dimension
@@ -103,7 +117,7 @@ function loadModel(file, gpu)
    return gpu and model:cuda() or model
 end
 
-local I2S_DEF_STOP_WORDS = {'<PADDING>', '<GO>', '<EOS>'}
+local I2S_DEF_STOP_WORDS = {'<PAD>', '<PADDING>', '<GO>', '<EOS>'}
 function indices2sent(index2word, indices, rev, stopwords)
    local words = {}
    local filt = stopwords or I2S_DEF_STOP_WORDS

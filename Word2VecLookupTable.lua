@@ -2,8 +2,9 @@ local nn = require 'nn'
 local Word2VecLookupTable, parent = torch.class('Word2VecLookupTable', 'nn.LookupTable')
 
 
-function Word2VecLookupTable:__init(filename, knownvocab, unifweight, normalize)
+function Word2VecLookupTable:__init(filename, knownvocab, unifweight, normalize, trainable)
     parent.__init(self, 0, 0)
+    self.trainable = trainable == nil or trainable
     local uw = unifweight or 0.0
     file = torch.DiskFile(filename, 'r')
     file:binary()
@@ -59,6 +60,13 @@ function Word2VecLookupTable:__init(filename, knownvocab, unifweight, normalize)
     self.vsz = self.vsz + 1
     file:close()
 
+end
+
+-- Only update if trainable is true
+function Word2VecLookupTable:accGradParameters(input, gradOutput, scale)
+   if self.trainable then
+      parent.accGradParameters(self, input, gradOutput, scale)
+   end
 end
 
 function Word2VecLookupTable:lookup(word)

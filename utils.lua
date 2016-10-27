@@ -1,3 +1,5 @@
+require 'lfs'
+
 -- http://lua-users.org/wiki/StringTrim
 function trim(s)
   return s:match'^%s*(.*%S)' or ''
@@ -105,6 +107,20 @@ function tab1st(orig, from, to)
    end
    return tab
 end
+
+function mkdirs(tgt_dir)
+   if tgt_dir ~= '' then
+      local atts = lfs.attributes(tgt_dir)
+      if atts == nil or atts.mode ~= 'directory' then
+	 print('No such directory, creating ' .. tgt_dir)
+	 lfs.mkdir(tgt_dir)
+      else
+	 print('Detected directory ' .. tgt_dir)
+      end
+   end
+
+end
+
 -- WIP
 function saveModel(model, file, gpu)
    if gpu then model:float() end

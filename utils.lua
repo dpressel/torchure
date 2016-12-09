@@ -84,6 +84,19 @@ function pretab(tab, item)
    return copy
 end
 
+function jointab(tab, delim)
+   
+   local joinval = delim and delim or ' '
+   if #tab == 0 then 
+      return ''
+   end
+   local s = tab[1]
+   for i=2,#tab do 
+      s = s .. joinval .. tab[i]
+   end
+  return s
+end
+
 function firstin(tab, x)
    for i,v in pairs(tab) do
       if v == x then

@@ -5,9 +5,21 @@ function trim(s)
   return s:match'^%s*(.*%S)' or ''
 end
 
+function startswith(str, sub)
+   local len = math.min(sub:len(), str:len())
+   return str:sub(1, len) == sub
+end
+
+function endswith(str, sub)
+   local strlen = str:len()
+   local sublen = sub:len()
+   local start = math.max(strlen - sublen + 1, 1)
+   return str:sub(start) == sub
+end
+
 -- NaNs?
 function hasNaN(t)
-   mx = torch.max(t)
+   local mx = torch.max(t)
    return mx ~= mx
 end
 

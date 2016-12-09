@@ -124,7 +124,7 @@ Installing
 
 - execute:
 ```
-luarocks make emb-scm-1.rockspec
+luarocks make torchure-scm-1.rockspec
 ```
 
 *From web*

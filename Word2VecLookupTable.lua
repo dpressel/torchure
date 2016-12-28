@@ -13,9 +13,7 @@ function Word2VecLookupTable:__init(filename, knownvocab, unifweight, normalize,
     self.vsz = 0
     local vsz = tonumber(vxd[1])
     if knownvocab then
-       for name,_ in pairs(knownvocab) do
-	  self.vsz = self.vsz + 1
-       end
+       self.vsz = tabsz(knownvocab)
     else
        self.vsz = vsz
     end

@@ -74,6 +74,14 @@ function subtab(orig, from, to)
    return tab
 end
 
+function tabsz(tab)
+   local count = 0
+   for _ in pairs(tab) do
+      count = count + 1
+   end
+   return count
+end
+
 -- Prepend to table
 function pretab(tab, item)
    local copy = {}
